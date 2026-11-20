@@ -189,7 +189,10 @@ export function createChatApp(rootEl) {
     authSuccessMessage: '',
     showPassword: false,
 
-    publicPage: 'home', // 'home' | 'guide' | 'about' | 'privacy' | 'terms' | 'contact'
+    publicPage: (() => {
+      const h = window.location.hash.replace(/^#\/?/, '').toLowerCase();
+      return ['home', 'guide', 'about', 'privacy', 'terms', 'contact'].includes(h) ? h : 'home';
+    })(), // 'home' | 'guide' | 'about' | 'privacy' | 'terms' | 'contact'
     viewingPublicDocs: false,
     cookieConsent: localStorage.getItem('baatcheet_cookie_consent') || '',
     contactSubmitted: false,
@@ -892,6 +895,10 @@ export function createChatApp(rootEl) {
     }
     if (code === 'auth/popup-closed-by-user') {
       return 'Google sign-in popup was closed before completing.';
+    }
+    if (code === 'auth/unauthorized-domain') {
+      const host = window.location.hostname || 'this domain';
+      return `Domain "${host}" is not authorized yet in Firebase Console (Authentication → Settings → Authorized domains). Add "${host}" there to enable Google sign-in.`;
     }
     return err instanceof Error ? err.message : 'Authentication failed. Please try again.';
   }
@@ -2115,10 +2122,12 @@ export function createChatApp(rootEl) {
     } else if (action === 'nav-page') {
       state.publicPage = target.dataset.page || 'home';
       state.contactSubmitted = false;
+      window.location.hash = state.publicPage === 'home' ? '' : `#${state.publicPage}`;
       renderApp();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (action === 'focus-auth') {
       state.publicPage = 'home';
+      window.location.hash = '';
       renderApp();
       setTimeout(() => {
         const emailEl = document.getElementById('auth-email');
@@ -2130,10 +2139,12 @@ export function createChatApp(rootEl) {
     } else if (action === 'open-legal-docs') {
       state.viewingPublicDocs = true;
       state.publicPage = 'privacy';
+      window.location.hash = '#privacy';
       renderApp();
       window.scrollTo({ top: 0 });
     } else if (action === 'back-to-chats') {
       state.viewingPublicDocs = false;
+      window.location.hash = '';
       renderApp();
     } else if (action === 'toggle-public-theme') {
       applyTheme(state.theme === 'dark' ? 'light' : 'dark');
@@ -2306,6 +2317,18 @@ export function createChatApp(rootEl) {
 
   window.addEventListener('beforeunload', () => {
     setOnlinePresence(false);
+  });
+
+  window.addEventListener('hashchange', () => {
+    const h = window.location.hash.replace(/^#\/?/, '').toLowerCase();
+    const validPages = ['home', 'guide', 'about', 'privacy', 'terms', 'contact'];
+    if (validPages.includes(h)) {
+      state.publicPage = h;
+      if (state.authUser && h !== 'home') {
+        state.viewingPublicDocs = true;
+      }
+      renderApp();
+    }
   });
 
   onAuthStateChanged(auth, async (user) => {

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Baatcheet — Redirecting</title>
+    <script>
+      (function () {
+        var loc = window.location;
+        var path = loc.pathname;
+        // Redirect unknown subpaths cleanly back to repository/site root
+        var parts = path.split('/').filter(Boolean);
+        var base = loc.hostname.endsWith('.github.io') && parts.length > 0 ? '/' + parts[0] + '/' : '/';
+        loc.replace(loc.origin + base + (loc.hash || ''));
+      })();
+    </script>
+  </head>
+  <body style="font-family: system-ui, sans-serif; display: flex; min-height: 100vh; align-items: center; justify-content: center; background: #f0f2f5; color: #111b21;">
+    <p>Redirecting to <a href="./">Baatcheet</a>...</p>
+  </body>
+</html>
