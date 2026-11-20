@@ -21,10 +21,39 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="./assets/index-7rkiu6-H.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DkEY87aY.css">
+    <!-- Allows pure static / zero-compile deployment on GitHub Pages without a build step -->
+
+    <script type="importmap">
+      {
+        "imports": {
+          "firebase/app": "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js",
+          "firebase/auth": "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js",
+          "firebase/firestore": "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js"
+        }
+      }
+    </script>
+    <script type="module" crossorigin src="./assets/index-B4v-7N--.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DDXZDREz.css">
   </head>
   <body class="bg-[#eae6df] dark:bg-[#0b141a] text-[#111b21] dark:text-[#e9edef] antialiased selection:bg-[#00a884]/25">
     <div id="app" class="min-h-[100dvh] w-full"></div>
+    <script>
+      (function () {
+        var probe = document.createElement('div');
+        probe.className = 'hidden';
+        document.body.appendChild(probe);
+        var compiled = window.getComputedStyle(probe).display === 'none';
+        probe.remove();
+        if (!compiled) {
+          var twStyle = document.createElement('style');
+          twStyle.setAttribute('type', 'text/tailwindcss');
+          twStyle.textContent = '@custom-variant dark (&:where(.dark, .dark *));';
+          document.head.appendChild(twStyle);
+          var twScript = document.createElement('script');
+          twScript.src = 'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4';
+          document.head.appendChild(twScript);
+        }
+      })();
+    </script>
   </body>
 </html>

@@ -29,7 +29,12 @@ import {
   writeBatch,
   increment,
 } from 'firebase/firestore';
-import firebaseConfig from '../firebase-applet-config.json';
+
+const configResponse = await fetch(new URL('../firebase-applet-config.json', import.meta.url));
+if (!configResponse.ok) {
+  throw new Error('Failed to load firebase-applet-config.json');
+}
+const firebaseConfig = await configResponse.json();
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);

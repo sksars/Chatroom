@@ -7,6 +7,9 @@ import {defineConfig} from 'vite';
 export default defineConfig(() => {
   return {
     base: './',
+    build: {
+      target: 'esnext',
+    },
     plugins: [
       react(),
       tailwindcss(),
