@@ -1,0 +1,6 @@
+{
+  "name": "Baatcheet — Real-Time Messaging",
+  "description": "A WhatsApp-inspired real-time messaging web app powered by Firebase with unique @username search to start new chats.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

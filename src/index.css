@@ -1,0 +1,96 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  html,
+  body {
+    font-family: var(--font-sans);
+    height: 100%;
+    margin: 0;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+/* Subtle WhatsApp-inspired geometric chat wallpaper pattern */
+.chat-wallpaper {
+  background-color: #efeae2;
+  background-image: radial-gradient(rgba(17, 27, 33, 0.055) 1px, transparent 1px),
+    radial-gradient(rgba(0, 128, 105, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
+}
+
+.dark .chat-wallpaper {
+  background-color: #0b141a;
+  background-image: radial-gradient(rgba(233, 237, 239, 0.045) 1px, transparent 1px),
+    radial-gradient(rgba(0, 168, 132, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
+}
+
+/* Message bubble corner tails */
+.bubble-tail-in {
+  border-top-left-radius: 2px !important;
+}
+
+.bubble-tail-out {
+  border-top-right-radius: 2px !important;
+}
+
+/* Crisp custom scrollbars */
+.wa-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.wa-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.wa-scroll::-webkit-scrollbar-thumb {
+  background: rgba(134, 150, 160, 0.35);
+  border-radius: 9999px;
+}
+
+.wa-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(134, 150, 160, 0.55);
+}
+
+/* Smooth typing dots animation */
+@keyframes typingBounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+.typing-dot {
+  animation: typingBounce 1.2s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-dot {
+    animation: none;
+    opacity: 0.8;
+  }
+}
